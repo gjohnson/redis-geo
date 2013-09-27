@@ -65,6 +65,10 @@ $ redis-geo --help
     -n, --namespace [namespace]  namespace in redis
 ```
 
+## TODO:
+
+  - hashkey sharding for memory optimizations
+
 ## License
 
 MIT
