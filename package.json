@@ -1,6 +1,6 @@
 {
   "name": "redis-geo",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "redis geo-ip lokup",
   "main": "index.js",
   "directories": {
