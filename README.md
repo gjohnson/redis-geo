@@ -60,7 +60,7 @@ $ redis-geo --help
 
     -h, --help                   output usage information
     -V, --version                output the version number
-    -p --port [port]             redis port
+    -p, --port [port]             redis port
     -h, --host [host]            redis host
     -n, --namespace [namespace]  namespace in redis
 ```
