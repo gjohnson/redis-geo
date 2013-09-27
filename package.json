@@ -6,7 +6,7 @@
   "directories": {
     "test": "test"
   },
-  "scripts": {
+  "bin": {
     "redis-geo": "bin/redis-geo"
   },
   "repository": {
