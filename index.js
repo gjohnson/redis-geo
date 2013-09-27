@@ -22,8 +22,10 @@ module.exports = function (redis, prefix) {
       if (err) return fn(err);
       if (!city.length) return fn();
       var id = city[0].split('_')[0];
-      var key = location + ':' + id;
-      redis.hgetall(key, fn);
+      redis.hget(location, id, function (err, data) {
+        if (err) return fn(err);
+        else fn(null, JSON.parse(data));
+      });
     });
   };
 };
