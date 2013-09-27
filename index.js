@@ -12,10 +12,8 @@
 
 module.exports = function (redis, prefix) {
   prefix = prefix || 'geo';
-
   var blocks = prefix + ':blocks';
   var location = prefix + ':location';
-
   return function (ip, fn) {
     var score = toScore(ip);
     if (!score) return fn();
