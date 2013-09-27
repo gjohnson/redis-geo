@@ -43,6 +43,28 @@ Next, import the locations.
 $ redis-geo import-locations path/to/locations.csv
 ```
 
+## Options
+
+```sh
+$ redis-geo --help
+
+  Usage: redis-geo [options] [command]
+
+  Commands:
+
+    import-blocks <file>   imports the location blocks
+    import-locations <file> imports the location details by city
+    lookup <ip>            looks up the geo data for the ip
+
+  Options:
+
+    -h, --help                   output usage information
+    -V, --version                output the version number
+    -p --port [port]             redis port
+    -h, --host [host]            redis host
+    -n, --namespace [namespace]  namespace in redis
+```
+
 ## License
 
 MIT
