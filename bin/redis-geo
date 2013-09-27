@@ -1,0 +1,109 @@
+#!/usr/bin/env node
+
+/**
+ * Dependencies.
+ */
+
+var fs = require('fs');
+var csv = require('csv');
+var redis = require('redis');
+var pkg = require('../package');
+var program = require('commander');
+var lookup = require('..');
+
+/**
+ * Options.
+ */
+
+program
+.version(pkg.version)
+.option('-p --port [port]', 'redis port', 6379)
+.option('-h, --host [host]', 'redis host', 'localhost')
+.option('-n, --namespace [namespace]', 'namespace in redis', 'geo');
+
+/**
+ * Redis connection.
+ */
+
+var rc = redis.createClient(program.port, program.host);
+
+/**
+ * Blocks.
+ */
+
+program
+.command('import-blocks <file>')
+.description('imports the location blocks')
+.action(function (file, options) {
+  csv()
+  .from.stream(fs.createReadStream(file))
+  .on('record', function (row, index) {
+    var key = program.namespace + ':blocks';
+    var start = parseInt(row[0], 10);
+    var city = parseInt(row[2], 10);
+
+    if (isNaN(start)) return;
+    if (isNaN(city)) return;
+
+    city = city + '_' + index;
+    rc.zadd(key, start, city);
+  });
+});
+
+/**
+ * Locations.
+ */
+
+program
+.command('import-locations <file>')
+.description('imports the location details by city')
+.action(function (file, options) {
+  csv()
+  .from.stream(fs.createReadStream(file))
+  .on('record', function (row, index) {
+    var prefix = program.namespace + ':location';
+    var id = parseInt(row[0], 10);
+    var key = prefix + ':' + id;
+
+    if (isNaN(id)) return;
+
+    rc.hmset(key, {
+      country: row[1],
+      state: row[2],
+      city: row[3],
+      zip: row[4],
+      lat: row[5],
+      lng: row[6],
+      metro: row[7],
+      areacode: row[8]
+    });
+  });
+});
+
+/**
+ * Lookup (demo).
+ */
+
+program
+.command('lookup <ip>')
+.description('looks up the geo data for the ip')
+.action(function (ip, options) {
+  lookup(rc)(ip, function (err, info) {
+    if (err) throw err;
+    if (!info) return console.log('no data found');
+    console.log('country: %s', info.country);
+    console.log('state: %s', info.state);
+    console.log('city: %s', info.city);
+    console.log('zip: %s', info.zip);
+    console.log('lat: %s', info.lat);
+    console.log('lng: %s', info.lng);
+    console.log('metro: %s', info.metro);
+    console.log('areacode: %s', info.areacode);
+  });
+});
+
+/**
+ * Go.
+ */
+
+program.parse(process.argv);

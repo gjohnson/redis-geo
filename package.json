@@ -1,0 +1,36 @@
+{
+  "name": "redis-geo",
+  "version": "0.0.1",
+  "description": "redis geo-ip lokup",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "redis-geo": "bin/redis-geo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:gjohnson/redis-geo.git"
+  },
+  "keywords": [
+    "redis",
+    "geo",
+    "geo-ip",
+    "maxmind"
+  ],
+  "author": "Garrett Johnson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gjohnson/redis-geo/issues"
+  },
+  "dependencies": {
+    "redis": "~0.8.5",
+    "csv": "~0.3.6",
+    "commander": "~2.0.0"
+  },
+  "devDependencies": {
+    "should": "~1.3.0",
+    "mocha": "~1.13.0"
+  }
+}

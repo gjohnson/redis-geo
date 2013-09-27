@@ -1,0 +1,7 @@
+node_modules
+coverage.html
+lib-cov
+tmp
+sandbox
+*.log
+.tern-port
