@@ -17,7 +17,7 @@ var lookup = require('..');
 
 program
 .version(pkg.version)
-.option('-p --port [port]', 'redis port', 6379)
+.option('-p, --port [port]', 'redis port', 6379)
 .option('-h, --host [host]', 'redis host', 'localhost')
 .option('-n, --namespace [namespace]', 'namespace in redis', 'geo');
 
