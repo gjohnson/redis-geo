@@ -22,12 +22,6 @@ program
 .option('-n, --namespace [namespace]', 'namespace in redis', 'geo');
 
 /**
- * Redis connection.
- */
-
-var rc = redis.createClient(program.port, program.host);
-
-/**
  * Blocks.
  */
 
@@ -35,6 +29,8 @@ program
 .command('import-blocks <file>')
 .description('imports the location blocks')
 .action(function (file, options) {
+  var rc = redis.createClient(program.port, program.host);
+
   csv()
   .from.stream(fs.createReadStream(file))
   .on('record', function (row, index) {
@@ -58,6 +54,8 @@ program
 .command('import-locations <file>')
 .description('imports the location details by city')
 .action(function (file, options) {
+  var rc = redis.createClient(program.port, program.host);
+
   csv()
   .from.stream(fs.createReadStream(file))
   .on('record', function (row, index) {
@@ -87,6 +85,8 @@ program
 .command('lookup <ip>')
 .description('looks up the geo data for the ip')
 .action(function (ip, options) {
+  var rc = redis.createClient(program.port, program.host);
+
   lookup(rc)(ip, function (err, info) {
     if (err) throw err;
     if (!info) return console.log('no data found');
